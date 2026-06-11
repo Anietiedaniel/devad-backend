@@ -30,14 +30,11 @@ require('../utils/sanitizeUser');
 const generateUsername =
 require('../utils/generateUsername');
 
-const setAuthCookies =
-require('../utils/setAuthCookies');
-
-const clearAuthCookies =
-require('../utils/clearAuthCookies');
-
 const verifyGoogleToken =
 require('../utils/verifyGoogleToken');
+
+const EmailService =
+require('./email.service');
 
 
 
@@ -89,6 +86,19 @@ const registerService = async (userData) => {
   // 4. Save to the database exactly ONCE. This will cleanly pass validation.
   await user.save();
 
+  await EmailService.sendVerificationEmail({
+
+    email:
+    user.email,
+
+    name:
+    user.name,
+
+    verificationUrl:
+    `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`,
+
+  });
+
   return {
     accessToken,
     refreshToken,
@@ -128,15 +138,24 @@ async (
 
   // BLOCK CHECK
   if (
-    user.isBlocked
-  ) {
+  user.isBlocked
+) {
 
-    throw new Error(
-      'Account blocked'
-    );
-  }
+  await EmailService
+  .sendAccountBlockedEmail({
 
+    email:
+    user.email,
 
+    name:
+    user.name,
+
+  });
+
+  throw new Error(
+    'Account blocked'
+  );
+}
 
   // LOCK CHECK
   if (
@@ -225,6 +244,27 @@ async (
 
 
   await user.save();
+
+  await EmailService
+.sendLoginAlertEmail({
+
+  email:
+  user.email,
+
+  name:
+  user.name,
+
+  ip:
+  'Unknown',
+
+  location:
+  'Unknown',
+
+  time:
+  new Date()
+  .toLocaleString(),
+
+});
 
 
 
@@ -397,7 +437,19 @@ async (
 
   await user.save();
 
+  await EmailService
+.sendPasswordResetEmail({
 
+  email:
+  user.email,
+
+  name:
+  user.name,
+
+  resetUrl:
+  `${process.env.CLIENT_URL}/reset-password/${resetToken}`,
+
+  });
 
   return {
     resetToken,
@@ -463,6 +515,17 @@ async (
 
   await user.save();
 
+  await EmailService
+.sendPasswordChangedEmail({
+
+  email:
+  user.email,
+
+  name:
+  user.name,
+
+});
+
 
 
   return true;
@@ -512,7 +575,16 @@ async (
 
   await user.save();
 
+  await EmailService
+.sendWelcomeEmail({
 
+    email:
+    user.email,
+
+    name:
+    user.name,
+
+  });
 
   return true;
 };
@@ -624,14 +696,25 @@ async (
 
 
   // BLOCK CHECK
-  if (
-    user.isBlocked
-  ) {
+if (
+  user.isBlocked
+) {
 
-    throw new Error(
-      'Account blocked'
-    );
-  }
+  await EmailService
+  .sendAccountBlockedEmail({
+
+    email:
+    user.email,
+
+    name:
+    user.name,
+
+  });
+
+  throw new Error(
+    'Account blocked'
+  );
+}
 
 
 
@@ -663,7 +746,26 @@ async (
 
   await user.save();
 
+  await EmailService
+.sendLoginAlertEmail({
 
+  email:
+  user.email,
+
+  name:
+  user.name,
+
+  ip:
+  'Google Login',
+
+  location:
+  'Unknown',
+
+  time:
+  new Date()
+  .toLocaleString(),
+
+});
 
   return {
 

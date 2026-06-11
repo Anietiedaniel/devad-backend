@@ -1,42 +1,52 @@
-const nodemailer =
-require('nodemailer');
+const nodemailer = require('nodemailer');
 
-const sendEmail =
-async ({
+const sendEmail = async ({
   to,
   subject,
   html,
 }) => {
 
+  console.log(
+    'COMPANY_LOGO:',
+    process.env.COMPANY_LOGO
+  );
+
+  console.log(
+    'EMAIL_FROM:',
+    process.env.EMAIL_FROM
+  );
+
   const transporter =
-  nodemailer.createTransport({
+    nodemailer.createTransport({
 
-    host:
-    process.env.EMAIL_HOST,
+      host:
+        process.env.EMAIL_HOST,
 
-    port:
-    process.env.EMAIL_PORT,
+      port:
+        Number(
+          process.env.EMAIL_PORT
+        ),
 
-    secure: false,
+      secure: false,
 
-    auth: {
+      auth: {
 
-      user:
-      process.env.EMAIL_USER,
+        user:
+          process.env.EMAIL_USER,
 
-      pass:
-      process.env.EMAIL_PASS,
+        pass:
+          process.env.EMAIL_PASS,
 
-    },
+      },
 
-  });
+    });
 
+  console.log(html);
 
-
-  await transporter.sendMail({
+  return transporter.sendMail({
 
     from:
-    process.env.EMAIL_FROM,
+      process.env.EMAIL_FROM,
 
     to,
 
@@ -48,4 +58,5 @@ async ({
 };
 
 module.exports =
-sendEmail;
+  sendEmail;
+  
