@@ -19,7 +19,7 @@ const authRoutes = require('./routes/auth.routes');
 const errorMiddleware = require('./middlewares/error.middleware');
 const notFoundMiddleware = require('./middlewares/notFound.middleware');
 // Import your standalone rate limiter middleware
-const limiter = require('./middlewares/rateLimiter'); 
+const limiter = require('./middlewares/rateLimit.middleware'); 
 
 const app = express();
 
