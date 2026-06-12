@@ -131,16 +131,9 @@ async (
 
 
 
- const ip =
-  req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
-  req.ip ||
-  req.socket.remoteAddress ||
-  "Unknown";
-
 const result = await loginService(
   email,
   password,
-  ip
 );
 
 

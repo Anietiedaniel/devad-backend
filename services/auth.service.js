@@ -117,7 +117,6 @@ const loginService =
 async (
   email,
   password,
-  ip = "Unknown"
 ) => {
 
   // FIND USER
@@ -248,25 +247,25 @@ if (!user.isVerified) {
 
   await user.save();
 
-  await EmailService
-.sendLoginAlertEmail({
+//   await EmailService
+// .sendLoginAlertEmail({
 
-  email:
-  user.email,
+//   email:
+//   user.email,
 
-  name:
-  user.name,
+//   name:
+//   user.name,
 
-  ip,
+//   ip,
 
-  location:
-  'Unknown',
+//   location:
+//   'Unknown',
 
-  time:
-  new Date()
-  .toLocaleString(),
+//   time:
+//   new Date()
+//   .toLocaleString(),
 
-});
+// });
 
 
 
