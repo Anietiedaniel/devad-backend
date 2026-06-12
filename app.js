@@ -42,7 +42,7 @@ app.use(compression());
 app.use(hpp());
 app.use(cookieParser());
 
-
+app.set("trust proxy", true);
 
 // =============================
 // CORS

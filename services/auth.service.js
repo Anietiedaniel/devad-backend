@@ -116,7 +116,8 @@ LOGIN
 const loginService =
 async (
   email,
-  password
+  password,
+  ip = "Unknown"
 ) => {
 
   // FIND USER
@@ -127,13 +128,15 @@ async (
 
 
 
-  if (!user) {
+if (!user) {
+  throw new Error("Invalid credentials");
+}
 
-    throw new Error(
-      'Invalid credentials'
-    );
-  }
-
+if (!user.isVerified) {
+  throw new Error(
+    "Please verify your email before logging in."
+  );
+}
 
 
   // BLOCK CHECK
@@ -254,8 +257,7 @@ async (
   name:
   user.name,
 
-  ip:
-  'Unknown',
+  ip,
 
   location:
   'Unknown',
