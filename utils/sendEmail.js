@@ -1,25 +1,37 @@
-const sendEmailGmail = require('./sendEmail.gmail');
-const sendEmailBrevo = require('./sendEmail.brevo');
+const axios = require("axios");
 
-const sendEmail = async (options) => {
+const sendEmail = async ({ to, subject, html }) => {
   try {
-    console.log('TRYING GMAIL');
+    console.log("📧 Preparing Brevo API request...");
 
-    return await sendEmailGmail(options);
-  } catch (gmailError) {
-    console.error('GMAIL FAILED');
-    console.error(gmailError.message);
+    const response = await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
+          name: "Devad Tech Academy",
+          email: "anietienteabasi123@gmail.com",
+        },
+        to: [{ email: to }],
+        subject,
+        htmlContent: html,
+      },
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
 
-    try {
-      console.log('TRYING BREVO');
+    console.log("✅ Email sent successfully");
+    console.log(response.data);
 
-      return await sendEmailBrevo(options);
-    } catch (brevoError) {
-      console.error('BREVO FAILED');
-      console.error(brevoError.message);
-
-      throw brevoError;
-    }
+    return response.data;
+  } catch (error) {
+    console.error("❌ Brevo API Error");
+    console.error(error.response?.data || error.message);
+    throw error;
   }
 };
 
