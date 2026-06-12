@@ -7,8 +7,8 @@ const cors = require('cors');
 const hpp = require('hpp');
 
 const session = require('express-session');
-// Production session store to prevent memory leaks on Render
-const MongoStore = require('connect-mongo'); 
+// FIXED: Destructured default import to prevent the "MongoStore.create is not a function" TypeError
+const { default: MongoStore } = require('connect-mongo'); 
 
 const passport = require('./config/passport');
 
