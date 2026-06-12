@@ -747,26 +747,26 @@ if (
 
   await user.save();
 
-  await EmailService
-.sendLoginAlertEmail({
+//   await EmailService
+// .sendLoginAlertEmail({
 
-  email:
-  user.email,
+//   email:
+//   user.email,
 
-  name:
-  user.name,
+//   name:
+//   user.name,
 
-  ip:
-  'Google Login',
+//   ip:
+//   'Google Login',
 
-  location:
-  'Unknown',
+//   location:
+//   'Unknown',
 
-  time:
-  new Date()
-  .toLocaleString(),
+//   time:
+//   new Date()
+//   .toLocaleString(),
 
-});
+// });
 
   return {
 
