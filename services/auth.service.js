@@ -448,7 +448,7 @@ async (
   user.name,
 
   resetUrl:
-  `${process.env.CLIENT_URL}/reset-password/${resetToken}`,
+  `${process.env.FRONTEND_URL}/reset-password/${resetToken}`,
 
   });
 
