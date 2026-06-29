@@ -516,16 +516,16 @@ async (
 
   await user.save();
 
-  await EmailService
-.sendPasswordChangedEmail({
+//   await EmailService
+// .sendPasswordChangedEmail({
 
-  email:
-  user.email,
+//   email:
+//   user.email,
 
-  name:
-  user.name,
+//   name:
+//   user.name,
 
-});
+// });
 
 
 
