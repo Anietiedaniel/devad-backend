@@ -265,7 +265,7 @@ router.post(
 
   forgotPasswordValidator,
 
-  validate,
+  // validate,
 
   forgotPassword
 );
